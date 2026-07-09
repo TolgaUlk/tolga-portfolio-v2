@@ -1,0 +1,244 @@
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=DM+Sans:wght@400;500;600&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 0 0% 96.5%;
+    --foreground: 0 0% 25.5%;
+
+    --card: 40 15% 96%;
+    --card-foreground: 30 10% 12%;
+
+    --popover: 40 20% 98%;
+    --popover-foreground: 30 10% 12%;
+
+    --primary: 30 10% 12%;
+    --primary-foreground: 40 20% 98%;
+
+    --secondary: 35 15% 92%;
+    --secondary-foreground: 30 10% 20%;
+
+    --muted: 35 10% 90%;
+    --muted-foreground: 30 8% 45%;
+
+    --accent: 25 30% 85%;
+    --accent-foreground: 30 10% 12%;
+
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 210 40% 98%;
+
+    --border: 35 15% 88%;
+    --input: 35 15% 88%;
+    --ring: 30 10% 12%;
+
+    --radius: 0.25rem;
+
+    --sidebar-background: 0 0% 98%;
+    --sidebar-foreground: 240 5.3% 26.1%;
+    --sidebar-primary: 240 5.9% 10%;
+    --sidebar-primary-foreground: 0 0% 98%;
+    --sidebar-accent: 240 4.8% 95.9%;
+    --sidebar-accent-foreground: 240 5.9% 10%;
+    --sidebar-border: 220 13% 91%;
+    --sidebar-ring: 217.2 91.2% 59.8%;
+
+    /* Custom portfolio tokens */
+    --font-display: 'Playfair Display', serif;
+    --font-body: 'DM Sans', sans-serif;
+
+    --hero-transition: 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+    --thumb-transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    --reveal-transition: 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+    
+    --shadow-soft: 0 4px 20px -4px hsl(30 10% 12% / 0.08);
+    --shadow-hover: 0 8px 30px -4px hsl(30 10% 12% / 0.12);
+  }
+
+  .dark {
+    --background: 30 10% 8%;
+    --foreground: 40 15% 92%;
+
+    --card: 30 10% 10%;
+    --card-foreground: 40 15% 92%;
+
+    --popover: 30 10% 8%;
+    --popover-foreground: 40 15% 92%;
+
+    --primary: 40 15% 92%;
+    --primary-foreground: 30 10% 8%;
+
+    --secondary: 30 8% 15%;
+    --secondary-foreground: 40 15% 92%;
+
+    --muted: 30 8% 18%;
+    --muted-foreground: 35 10% 55%;
+
+    --accent: 30 15% 20%;
+    --accent-foreground: 40 15% 92%;
+
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 210 40% 98%;
+
+    --border: 30 8% 18%;
+    --input: 30 8% 18%;
+    --ring: 40 15% 92%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+body {
+  @apply bg-background text-foreground;
+  font-family: var(--font-body);
+  font-weight: 400;
+}
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-display);
+    font-weight: 500;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+@layer components {
+  .hero-image {
+    @apply w-full h-full object-cover;
+    transition: opacity var(--hero-transition), transform var(--hero-transition);
+  }
+
+  .hero-image-enter {
+    animation: heroFadeIn var(--hero-transition) forwards;
+  }
+
+  .thumbnail-item {
+    @apply relative overflow-hidden cursor-pointer;
+    transition: transform var(--thumb-transition), box-shadow var(--thumb-transition);
+  }
+
+  .thumbnail-item:hover {
+    transform: scale(1.03);
+    box-shadow: var(--shadow-hover);
+  }
+
+  .thumbnail-item::after {
+    content: '';
+    @apply absolute inset-0 bg-foreground/0 transition-all duration-300;
+  }
+
+  .thumbnail-item:hover::after {
+    @apply bg-foreground/5;
+  }
+
+  .thumbnail-active {
+    @apply ring-2 ring-foreground/20;
+    transform: scale(1.02);
+  }
+}
+
+@layer utilities {
+  .text-display {
+    font-family: var(--font-display);
+  }
+
+  .text-body {
+    font-family: var(--font-body);
+  }
+}
+
+@keyframes heroFadeIn {
+  from {
+    opacity: 0;
+    transform: scale(1.02);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-up {
+  animation: fadeUp 0.6s ease-out forwards;
+}
+
+.animate-fade-up-delay-1 {
+  animation: fadeUp 0.6s ease-out 0.1s forwards;
+  opacity: 0;
+}
+
+.animate-fade-up-delay-2 {
+  animation: fadeUp 0.6s ease-out 0.2s forwards;
+  opacity: 0;
+}
+
+.animate-fade-up-delay-3 {
+  animation: fadeUp 0.6s ease-out 0.3s forwards;
+  opacity: 0;
+}
+
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-6px); }
+  75% { transform: translateX(6px); }
+}
+
+/* ---------------------------------------------------------------------- */
+/* Scroll reveal — used by useScrollReveal() hook. Items fade + rise into  */
+/* view as the user scrolls, then stay. Disabled entirely under           */
+/* prefers-reduced-motion (see rule above).                               */
+/* ---------------------------------------------------------------------- */
+.reveal-item {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity var(--reveal-transition), transform var(--reveal-transition);
+}
+
+.reveal-item.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ---------------------------------------------------------------------- */
+/* Section width scale — a small, consistent set of content widths used   */
+/* across every case-study page, replacing one-off max-w-[XX%] values     */
+/* that made spacing/alignment feel inconsistent from project to project. */
+/* ---------------------------------------------------------------------- */
+.section-full   { @apply w-full; }
+.section-wide   { @apply container max-w-[90%] md:max-w-4xl lg:max-w-5xl mx-auto px-4 md:px-6; }
+.section-medium { @apply container max-w-2xl mx-auto px-4 md:px-6; }
+.section-narrow { @apply container max-w-xl mx-auto px-4 md:px-6; }
+.section-half   { @apply container max-w-[90%] md:max-w-2xl mx-auto px-4 md:px-6; }
+
+.section-stack > * + * {
+  margin-top: 2.5rem;
+}
+
+@media (min-width: 768px) {
+  .section-stack > * + * {
+    margin-top: 3.5rem;
+  }
+}
