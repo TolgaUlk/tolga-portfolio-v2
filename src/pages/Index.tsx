@@ -1,47 +1,26 @@
-import { useState, useCallback } from 'react';
-import PortfolioHeader from '@/components/Portfolio/PortfolioHeader';
-import HeroImage from '@/components/Portfolio/HeroImage';
-import ThumbnailGrid from '@/components/Portfolio/ThumbnailGrid';
-import { projects, landingHero, Project } from '@/data/projects';
+import NavHeader from '@/components/Netflix/NavHeader';
+import LandingHero from '@/components/Netflix/LandingHero';
+import FeaturedSection from '@/components/Netflix/FeaturedSection';
+import CategoryRow from '@/components/Netflix/CategoryRow';
+import { CATEGORY_ROWS, projectsInCategory, getFeaturedProjects } from '@/data/projects';
 
 const Index = () => {
-  const [activeItem, setActiveItem] = useState<Project | typeof landingHero>(landingHero);
-  const [isAnimating, setIsAnimating] = useState(false);
-
-  const handleThumbnailHover = useCallback(
-    (item: Project) => {
-      if (item.id !== activeItem.id) {
-        setIsAnimating(true);
-        setActiveItem(item);
-        setTimeout(() => setIsAnimating(false), 600);
-      }
-    },
-    [activeItem.id]
-  );
-
-  const handleLogoClick = useCallback(() => {
-    if (activeItem.id !== landingHero.id) {
-      setIsAnimating(true);
-      setActiveItem(landingHero);
-      setTimeout(() => setIsAnimating(false), 600);
-    }
-  }, [activeItem.id]);
+  const featured = getFeaturedProjects();
 
   return (
-    <div className="min-h-screen bg-background">
-      <section id="work" className="relative">
-        <PortfolioHeader onLogoClick={handleLogoClick} isLandingHero={activeItem.id === landingHero.id} />
-        <HeroImage item={activeItem} isAnimating={isAnimating} />
-      </section>
+    <div className="min-h-screen bg-black text-white">
+      <NavHeader />
+      <LandingHero />
+      <FeaturedSection projects={featured} />
 
-      <section>
-        <ThumbnailGrid items={projects} activeId={activeItem.id} onHover={handleThumbnailHover} />
-      </section>
+      <div className="mt-6 md:mt-10">
+        {CATEGORY_ROWS.map((row) => (
+          <CategoryRow key={row.key} title={row.label} projects={projectsInCategory(row.key)} />
+        ))}
+      </div>
 
-      <footer className="border-t border-border py-8 px-4 md:px-6">
-        <div className="container max-w-7xl mx-auto text-sm text-muted-foreground">
-          <p className="font-body">© {new Date().getFullYear()} Tolga Ülkümen. All rights reserved.</p>
-        </div>
+      <footer className="border-t border-white/10 py-8 px-4 md:px-8 mt-8">
+        <p className="text-white/50 text-xs md:text-sm">© {new Date().getFullYear()} Tolga Ülkümen.</p>
       </footer>
     </div>
   );
